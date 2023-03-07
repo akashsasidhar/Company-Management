@@ -1,0 +1,17 @@
+table {
+  border-radius: 5px;
+  overflow: hidden;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin: 5% auto;
+}
+
+th,
+td {
+
+ align-items: center;
+ text-align: center;
+overflow: hidden;
+  margin: 0.2% 2%;
+  word-break: normal;
+}
