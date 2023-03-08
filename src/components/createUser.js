@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import ReactDatePicker from "react-datepicker";
 import { Link } from "react-router-dom";
 import { isEmailValid, isNameValid } from "..//helpers/validate";
 import { createUser, getUserList } from "../action/company";
@@ -18,7 +17,6 @@ const CreateUser = ({ id, companyName }) => {
   const customCentered = {
     alignItems: "center",
     minHeight: "20vh",
-    // margin: "0 auto",
     maxWidth: "50%",
     overflow: "auto",
     position: "absolute",
@@ -60,7 +58,8 @@ const CreateUser = ({ id, companyName }) => {
     setEmail("");
     setDesignation("");
     setDob("");
-    console.log(res);
+    alert("User Created Successfully");
+    return res;
   }
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -79,7 +78,6 @@ const CreateUser = ({ id, companyName }) => {
   };
   async function fetchData(id) {
     const response = await getUserList(id);
-    console.log(response, "hi");
     setUserList(response);
   }
   useEffect(() => {
@@ -95,14 +93,6 @@ const CreateUser = ({ id, companyName }) => {
           <td className="col mb-3">{user.designation}</td>
           <td className="col mb-3">{user.date_of_birth}</td>
           <td className="col mb-3">
-            {/* <button className="btn btn-primary">
-              <Link
-                to={`/user/${company.id}`}
-                style={{ color: "white", textDecoration: "none" }}
-              >
-                Edit
-              </Link>
-            </button> */}
             <button className="btn btn-warning">
               <Link
                 to={`/user/${user.userid}`}
@@ -208,7 +198,6 @@ const CreateUser = ({ id, companyName }) => {
                   />
                 </div>
                 <div className="form-group g-2">
-                  {/* <ReactDatePicker/> */}
                   <input
                     type="date"
                     className={`form-control`}

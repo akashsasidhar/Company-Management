@@ -45,6 +45,8 @@ export const CreateCompany = () => {
     };
     await createCompany(data);
     await fetchData();
+    setCompanyAddress("");
+    setName("");
   };
   async function fetchData() {
     const response = await getCompanyList();

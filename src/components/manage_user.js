@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
+  getCompanyDetail,
   getCompanyListForMigrate,
   getUserDetail,
   userMigrate,
@@ -11,7 +12,8 @@ export const ManageUser = () => {
   const [user, setUser] = useState("");
   const [options, setOptions] = useState(null);
   const [selectedOption, setSelectedOption] = useState("");
-  console.log(id);
+  const [company, setCompany] = useState(null);
+
   const customCentered = {
     backgroundColor: "#ffffff",
     padding: "1%",
@@ -22,12 +24,13 @@ export const ManageUser = () => {
   const fetchData = async (id) => {
     const res = await getUserDetail(id);
     setUser(res);
-    await fetchCompanyList(user.company_id);
+    await fetchCompanyList(res.company_id);
   };
-  const fetchCompanyList = async (id) => {
-    console.log(id, "company_id");
-    const res = await getCompanyListForMigrate(id);
-    console.log(res);
+  const fetchCompanyList = async (companyId) => {
+    const response1 = await getCompanyDetail(companyId);
+    setCompany(response1);
+    const res = await getCompanyListForMigrate(companyId);
+
     setOptions(res);
   };
   useEffect(() => {
@@ -43,15 +46,17 @@ export const ManageUser = () => {
       companyId: selectedOption,
       userId: id,
     };
-    console.log(selectedOption);
+
     await userMigrate(data);
+    await fetchData(id);
   };
   return (
     <div className="container-fluid">
       <div className=" row d-flex " style={customCentered}>
         {user && (
           <>
-            <h1>User Details - {user.first_name}</h1>
+            <h1>User Details </h1>
+            <h3>Company Name- {company && company.name}</h3>
             <div className="container-fluid row d-flex">
               <div className="row mb-3">
                 <div className="col mb-12">
@@ -88,7 +93,6 @@ export const ManageUser = () => {
           </>
         )}
       </div>
-      {/* <CreateUser id={id} /> */}
       <div className="container">
         <h2>Migrate User</h2>
         <form className="form" onSubmit={onSubmit}>
@@ -122,17 +126,4 @@ export const ManageUser = () => {
       </div>
     </div>
   );
-  //   return (
-  // <div>
-  //   <select value={selectedOption} onChange={handleChange}>
-  {
-    /* {options.map((option) => (
-    <option key={option.value} value={option.value}>
-  {option.label}
-    </option>
-  ))} */
-  }
-  //   </select>
-  // </div>
-  //   );
 };

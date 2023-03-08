@@ -16,7 +16,6 @@ export const ManageCompany = () => {
 
   async function fetchData() {
     const response1 = await getCompanyDetail(id);
-    console.log(response1);
     setCompany(response1);
   }
   useEffect(() => {
